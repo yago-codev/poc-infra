@@ -8,7 +8,7 @@ services:
     container_name: api_aws_app
     tty: true
     volumes:
-      - ./node:/home/node/app
+      - ./node:/usr/app
     networks:
       - api_aws_network
     command: yarn start

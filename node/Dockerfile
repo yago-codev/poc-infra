@@ -1,7 +1,7 @@
 # usaremos a imagem node na versão 14, derivada do linux alpine 3.13
 FROM node:16-slim
 # diretório de trabalho que será criado quando a imagem terminar de ser buildada
-WORKDIR /home/node/app
+WORKDIR /usr/app
 # vai copiar o package.json e o yarn.lock para dentro da pasta /home/node/app/
 COPY package.json yarn.lock ./
 # vai rodar o npm para instalar as dependências do projeto
