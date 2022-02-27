@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    container_name: api_aws_app
+    tty: true
+    volumes:
+      - ./node:/home/node/app
+    networks:
+      - api_aws_network
+    command: yarn start
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: api_aws_postgres
+    restart: always
+    tty: true
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./postgres/pg-data:/var/lib/postgresql/data
+    # env_file: .env 
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: api_aws_postgres_password
+      POSTGRES_DB: nodeapi
+    networks:
+      - api_aws_network
+    ports:
+      - "5432:5432"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: api_aws_nginx
+    networks:
+      - api_aws_network
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+networks:
+  api_aws_network:
+    driver: bridge
