@@ -5,10 +5,11 @@ services:
     build:
       context: ./node
       dockerfile: Dockerfile
+    entrypoint: ./.docker/entrypoint.sh
     container_name: api_aws_app
     tty: true
     volumes:
-      - ./node:/usr/app
+      - ./node:/home/node/app
     networks:
       - api_aws_network
     command: yarn start
