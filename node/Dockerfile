@@ -5,8 +5,8 @@ WORKDIR /usr/app
 # vai copiar o package.json e o yarn.lock para dentro da pasta /home/node/app/
 COPY package.json yarn.lock ./
 # vai rodar o npm para instalar as dependências do projeto
-RUN apt-get update && \
-    apt-get upgrade && \
+RUN sudo apt-get update && \
+    sudo apt-get upgrade && \
     yarn
 # vai copiar todo o conteúdo do path raíz da nossa máquina para o path raiz do workdir
 COPY . .
